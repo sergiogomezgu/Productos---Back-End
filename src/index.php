@@ -38,6 +38,12 @@ switch ($page) {
         }
         break;
 
+    case 'logout':
+        require_once 'controllers/AuthController.php';
+        $controller = new AuthController();
+        $controller->logout();
+        break;
+
     default:
         echo "Error 404 - Página no encontrada";
         break;
