@@ -38,6 +38,25 @@ switch ($page) {
         }
         break;
 
+
+    case 'admin':
+        require_once 'controllers/AdminController.php';
+        $controller = new AdminController();
+
+        // Miramos si se pide una acción específica (ej: crear, editar)
+        $action = isset($_GET['action']) ? $_GET['action'] : 'index';
+
+        // Esta es una forma avanzada de llamar a la función que toca
+        // (Si $action = 'index', llama a $controller->index())
+        // (Si $action = 'create_booking', llamará a $controller->create_booking())
+        if (method_exists($controller, $action)) {
+            $controller->$action();
+        } else {
+            echo "Error: Acción no encontrada en el AdminController.";
+        }
+        break;
+
+
     case 'logout':
         require_once 'controllers/AuthController.php';
         $controller = new AuthController();
