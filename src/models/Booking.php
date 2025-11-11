@@ -26,12 +26,10 @@ class Booking {
     // --- MÉTODO PARA CREAR UNA RESERVA ---
     public function create() {
         // 1. Generar los datos que faltan
-        // El enunciado dice: "se asignará un localizador que debe ser único"
         $this->localizador = uniqid('ISLA-');
         $this->fecha_reserva = date('Y-m-d H:i:s'); // La fecha de hoy
 
         // 2. La consulta SQL
-        // (Ignoramos id_destino y id_vehiculo por ahora, los dejamos en NULL)
         $query = "INSERT INTO " . $this->table_name . " (
                     localizador, id_hotel, id_tipo_reserva, email_cliente, 
                     fecha_reserva, fecha_entrada, hora_entrada, 
@@ -53,14 +51,10 @@ class Booking {
         $stmt->bindParam(":email_cliente", $this->email_cliente);
         $stmt->bindParam(":fecha_reserva", $this->fecha_reserva);
         $stmt->bindParam(":num_viajeros", $this->num_viajeros);
-
-        // Datos de llegada (pueden ser nulos si es solo 'salida')
         $stmt->bindParam(":fecha_entrada", $this->fecha_entrada);
         $stmt->bindParam(":hora_entrada", $this->hora_entrada);
         $stmt->bindParam(":vuelo_entrada", $this->numero_vuelo_entrada);
         $stmt->bindParam(":origen_entrada", $this->origen_vuelo_entrada);
-
-        // Datos de salida (pueden ser nulos si es solo 'llegada')
         $stmt->bindParam(":fecha_salida", $this->fecha_vuelo_salida);
         $stmt->bindParam(":hora_salida", $this->hora_vuelo_salida);
 
@@ -73,5 +67,25 @@ class Booking {
         printf("Error: %s.\n", $stmt->error);
         return false;
     }
-}
+
+    // --- MÉTODO PARA LEER TODAS LAS RESERVAS ---
+    public function readAll() {
+        // Unimos (JOIN) SOLO la tabla de tipo_reserva
+        $query = "SELECT
+                    r.*, 
+                    t.Descripción as tipo_reserva_nombre
+                FROM
+                    " . $this->table_name . " r
+                LEFT JOIN
+                    transfer_tipo_reserva t ON r.id_tipo_reserva = t.id_tipo_reserva
+                ORDER BY
+                    r.fecha_entrada ASC, r.hora_entrada ASC";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+
+        return $stmt;
+    }
+
+} // <-- Llave final de la clase
 ?>

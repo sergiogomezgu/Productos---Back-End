@@ -24,11 +24,18 @@ class AdminController {
         require_once 'views/admin/dashboard.php';
     }
 
-    // Muestra la vista del calendario
+   // Muestra la vista del calendario CON DATOS
     public function calendar() {
-        // (Más adelante, aquí buscaremos las reservas en la BBDD)
+        // 1. Conexión y Modelo
+        $database = new Database();
+        $db = $database->getConnection();
+        $booking = new Booking($db);
 
-        // Por ahora, solo cargamos la vista
+        // 2. Llamar al método para leer todas las reservas
+        $stmt = $booking->readAll();
+
+        // 3. Pasar los datos a la vista
+        // (La variable $stmt estará disponible en el archivo de la vista)
         require_once 'views/admin/calendar.php';
     }
     // (Aquí arriba está la función calendar() ...)
