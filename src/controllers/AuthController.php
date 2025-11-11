@@ -54,6 +54,10 @@ class AuthController {
             $_SESSION['user_name'] = $user_data['nombre'];
             $_SESSION['user_role'] = $user_data['tipo_usuario'];
 
+            // --- ¡¡ESTA ES LA LÍNEA QUE ARREGLA EL PROBLEMA!! ---
+            // Guardamos el email para que el panel de usuario pueda encontrar sus reservas
+            $_SESSION['user_email'] = $user_data['email']; 
+
             echo "¡Login correcto! Redirigiendo al panel...";
             echo "<script>
                     setTimeout(function() {

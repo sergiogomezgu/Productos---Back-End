@@ -56,6 +56,24 @@ switch ($page) {
         }
         break;
 
+        // (Aquí arriba está el case 'admin':...)
+    break;
+
+    case 'user':
+        require_once 'controllers/UserController.php';
+        $controller = new UserController();
+
+        // Miramos si se pide una acción específica (ej: my_bookings)
+        $action = isset($_GET['action']) ? $_GET['action'] : 'index';
+
+        if (method_exists($controller, $action)) {
+            $controller->$action();
+        } else {
+            echo "Error: Acción no encontrada en el UserController.";
+        }
+        break;
+
+
 
     case 'logout':
         require_once 'controllers/AuthController.php';

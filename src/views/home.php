@@ -24,7 +24,7 @@
             if ($_SESSION['user_role'] == 'admin' || $_SESSION['user_role'] == 'administrador') {
                  echo ' | <a href="index.php?page=admin">Panel de Administración</a>';
             } else {
-                 echo ' | <a href="index.php?page=panel">Mi Panel de Usuario</a>';
+                 echo ' | <a href="index.php?page=user">Mi Panel de Usuario</a>';
             }
 
         } else {
