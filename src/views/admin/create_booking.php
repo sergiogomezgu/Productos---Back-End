@@ -28,7 +28,7 @@
     </nav>
 
     <h2>Crear Nueva Reserva</h2>
-    <p>Este es el formulario para crear una nueva reserva (Paso 4.e).</p>
+    <p>Formulario para crear una nueva reserva</p>
 
     <form action="index.php?page=admin&action=submit_booking" method="POST">
 

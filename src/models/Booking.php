@@ -31,16 +31,16 @@ class Booking {
 
         // 2. La consulta SQL
         $query = "INSERT INTO " . $this->table_name . " (
-                    localizador, id_hotel, id_tipo_reserva, email_cliente, 
-                    fecha_reserva, fecha_entrada, hora_entrada, 
-                    numero_vuelo_entrada, origen_vuelo_entrada, 
-                    fecha_vuelo_salida, hora_vuelo_salida, num_viajeros
-                  ) VALUES (
-                    :localizador, :id_hotel, :id_tipo_reserva, :email_cliente,
-                    :fecha_reserva, :fecha_entrada, :hora_entrada,
-                    :vuelo_entrada, :origen_entrada,
-                    :fecha_salida, :hora_salida, :num_viajeros
-                  )";
+                        localizador, id_hotel, id_tipo_reserva, email_cliente, 
+                        fecha_reserva, fecha_entrada, hora_entrada, 
+                        numero_vuelo_entrada, origen_vuelo_entrada, 
+                        fecha_vuelo_salida, hora_vuelo_salida, num_viajeros
+                      ) VALUES (
+                        :localizador, :id_hotel, :id_tipo_reserva, :email_cliente,
+                        :fecha_reserva, :fecha_entrada, :hora_entrada,
+                        :vuelo_entrada, :origen_entrada,
+                        :fecha_salida, :hora_salida, :num_viajeros
+                      )";
 
         $stmt = $this->conn->prepare($query);
 
@@ -72,19 +72,95 @@ class Booking {
     public function readAll() {
         // Unimos (JOIN) SOLO la tabla de tipo_reserva
         $query = "SELECT
-                    r.*, 
-                    t.Descripción as tipo_reserva_nombre
-                FROM
-                    " . $this->table_name . " r
-                LEFT JOIN
-                    transfer_tipo_reserva t ON r.id_tipo_reserva = t.id_tipo_reserva
-                ORDER BY
-                    r.fecha_entrada ASC, r.hora_entrada ASC";
+                        r.*, 
+                        t.Descripción as tipo_reserva_nombre
+                    FROM
+                        " . $this->table_name . " r
+                    LEFT JOIN
+                        transfer_tipo_reserva t ON r.id_tipo_reserva = t.id_tipo_reserva
+                    ORDER BY
+                        r.fecha_entrada ASC, r.hora_entrada ASC";
 
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
 
         return $stmt;
+    }
+
+
+    // --- MÉTODO PARA BORRAR UNA RESERVA ---
+    public function delete($id) {
+        $query = "DELETE FROM " . $this->table_name . " WHERE id_reserva = :id";
+
+        $stmt = $this->conn->prepare($query);
+
+        // Vincular el ID
+        $stmt->bindParam(':id', $id);
+
+        // Ejecutar
+        if($stmt->execute()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    // --- ¡NUEVA FUNCIÓN! (Paso 3) ---
+    // --- MÉTODO PARA LEER UNA SOLA RESERVA ---
+    public function readOne($id) {
+        $query = "SELECT * FROM " . $this->table_name . " WHERE id_reserva = :id LIMIT 1";
+
+        $stmt = $this->conn->prepare($query);
+        
+        // Vincular el ID
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        
+        // Obtener la fila
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        // Devolver los datos
+        return $row;
+    }
+
+    // --- MÉTODO PARA ACTUALIZAR UNA RESERVA ---
+    public function update() {
+        // (Esta consulta es más compleja, actualiza todos los campos)
+        $query = "UPDATE " . $this->table_name . "
+                SET
+                    email_cliente = :email_cliente,
+                    id_hotel = :id_hotel,
+                    num_viajeros = :num_viajeros,
+                    fecha_entrada = :fecha_entrada,
+                    hora_entrada = :hora_entrada,
+                    numero_vuelo_entrada = :numero_vuelo_entrada,
+                    fecha_modificacion = :fecha_modificacion
+                WHERE
+                    id_reserva = :id_reserva";
+
+        $stmt = $this->conn->prepare($query);
+
+        // 3. "Limpiar" y vincular los datos
+        $stmt->bindParam(':email_cliente', $this->email_cliente);
+        $stmt->bindParam(':id_hotel', $this->id_hotel);
+        $stmt->bindParam(':num_viajeros', $this->num_viajeros);
+        $stmt->bindParam(':fecha_entrada', $this->fecha_entrada);
+        $stmt->bindParam(':hora_entrada', $this->hora_entrada);
+        $stmt->bindParam(':numero_vuelo_entrada', $this->numero_vuelo_entrada);
+
+        // Ponemos la fecha de hoy como fecha de modificación
+        $this->fecha_modificacion = date('Y-m-d H:i:s');
+        $stmt->bindParam(':fecha_modificacion', $this->fecha_modificacion);
+
+        // El ID de la reserva que queremos actualizar
+        $stmt->bindParam(':id_reserva', $this->id_reserva);
+
+        // 4. Ejecutar
+        if($stmt->execute()) {
+            return true; // Éxito
+        }
+
+        return false;
     }
 
 } // <-- Llave final de la clase

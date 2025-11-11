@@ -14,6 +14,11 @@
         .calendar th, .calendar td { border: 1px solid #ccc; padding: 10px; height: 100px; vertical-align: top; }
         .calendar th { background: #f0f0f0; }
         .day-number { font-weight: bold; }
+        
+        /* Estilos de la lista de reservas */
+        .reservas-lista { list-style: none; padding: 0; }
+        .reserva-item { background: #f9f9f9; border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; border-radius: 5px; }
+        .reserva-localizador { font-weight: bold; font-size: 1.2em; color: #d9534f; }
     </style>
 </head>
 <body>
@@ -31,38 +36,33 @@
     <h2>Listado de Reservas</h2>
     <p>Aquí se muestran todas las reservas de la base de datos.</p>
 
-    <style>
-        /* Estos estilos son nuevos para la lista */
-        .reservas-lista { list-style: none; padding: 0; }
-        .reserva-item { background: #f9f9f9; border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; border-radius: 5px; }
-        .reserva-localizador { font-weight: bold; font-size: 1.2em; color: #d9534f; }
-    </style>
-
     <ul class="reservas-lista">
         <?php
-        // $stmt es la variable que nos pasó el AdminController (Paso 2)
         if ($stmt->rowCount() > 0) {
-            // Si hay reservas, las recorremos una por una
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                // Extraemos los datos para que sea más fácil usarlos
                 extract($row);
                 
                 echo "<li class='reserva-item'>";
                 echo "<span class='reserva-localizador'>Localizador: $localizador</span>";
                 echo "<p><strong>Cliente:</strong> " . htmlspecialchars($email_cliente) . "</p>";
                 
-                // Mostramos los datos de llegada (si existen)
                 if (!empty($fecha_entrada)) {
                     echo "<p><strong>Llegada:</strong> $fecha_entrada a las $hora_entrada (Vuelo: $numero_vuelo_entrada)</p>";
                 }
-                // Mostramos los datos de salida (si existen)
                 if (!empty($fecha_vuelo_salida)) {
                      echo "<p><strong>Salida:</strong> $fecha_vuelo_salida a las $hora_vuelo_salida</g></p>";
                 }
                 
-                // Usamos ?? para evitar errores si el hotel fue borrado (nombre_hotel será null)
                 echo "<p><strong>Hotel ID:</strong> $id_hotel</p>";
                 echo "<p><strong>Viajeros:</strong> $num_viajeros</p>";
+                echo "<hr>";
+                
+                // --- ¡ESTA ES LA LÍNEA NUEVA DEL PASO 1! ---
+                echo '<a href="index.php?page=admin&action=edit_booking&id=' . $id_reserva . '">Editar</a> | ';
+                
+                // --- Esta línea ya la tenías ---
+                echo '<a href="index.php?page=admin&action=delete_booking&id=' . $id_reserva . '" onclick="return confirm(\'¿Estás seguro de que quieres borrar esta reserva?\');">Borrar Reserva</a>';
+
                 echo "</li>";
             }
         } else {

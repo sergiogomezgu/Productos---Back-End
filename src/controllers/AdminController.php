@@ -38,12 +38,9 @@ class AdminController {
         // (La variable $stmt estará disponible en el archivo de la vista)
         require_once 'views/admin/calendar.php';
     }
-    // (Aquí arriba está la función calendar() ...)
 
     // Muestra el formulario para crear una nueva reserva
     public function create_booking() {
-        // (Más adelante, aquí cargaremos la lista de hoteles desde la BBDD)
-
         // Por ahora, solo cargamos la vista del formulario
         require_once 'views/admin/create_booking.php';
     }
@@ -62,13 +59,8 @@ class AdminController {
         $booking->num_viajeros = $_POST['num_viajeros'];
 
         // --- Traducción de IDs ---
-
-        // PROBLEMA 1: El formulario envía el *nombre* del hotel, pero la BBDD quiere un *ID*.
-        // SOLUCIÓN (Temporal): Usaremos el ID que el admin escriba en el campo.
         $booking->id_hotel = $_POST['hotel']; // (Asumimos que el admin escribe el ID del hotel)
-
-        // PROBLEMA 2: El formulario envía "llegada", "salida", etc., pero la BBDD quiere un ID.
-        // SOLUCIÓN: Hacemos una "traducción" manual.
+        
         $tipo_reserva_texto = $_POST['tipo_reserva'];
         if ($tipo_reserva_texto == 'llegada') {
             $booking->id_tipo_reserva = 1; // Asumimos 1 = llegada
@@ -79,20 +71,14 @@ class AdminController {
         }
 
         // 4. Asignar datos de trayectos (controlando nulos)
-        // (Usamos el 'operador de fusión de null' (??) para evitar errores si el campo está vacío)
-
-        // Datos de Llegada
         $booking->fecha_entrada = $_POST['dia_llegada'] ?? null;
         $booking->hora_entrada = $_POST['hora_llegada'] ?? null;
         $booking->numero_vuelo_entrada = $_POST['vuelo_llegada'] ?? null;
         $booking->origen_vuelo_entrada = $_POST['origen_llegada'] ?? null;
-
-        // Datos de Salida
         $booking->fecha_vuelo_salida = $_POST['dia_salida'] ?? null;
         $booking->hora_vuelo_salida = $_POST['hora_salida'] ?? null;
-        // (La DB no tenía 'numero_vuelo_salida', así que lo ignoramos)
 
-
+        
         // 5. Intentar crear la reserva
         if($booking->create()) {
             echo "<h1>¡Reserva Creada!</h1>";
@@ -103,6 +89,90 @@ class AdminController {
             echo '<a href="index.php?page=admin&action=create_booking">Volver a intentarlo</a>';
         }
     }
-    // (Aquí añadiremos más tarde las funciones para crear, editar y borrar reservas)
-}
+
+    // --- ¡NUEVA FUNCIÓN! (Paso 3) ---
+    // PROCESA la eliminación de una reserva
+    public function delete_booking() {
+        // 1. Conexión y Modelo
+        $database = new Database();
+        $db = $database->getConnection();
+        $booking = new Booking($db);
+
+        // 2. Obtener el ID de la URL
+        $id_a_borrar = $_GET['id'];
+
+        // 3. Intentar borrar
+        if($booking->delete($id_a_borrar)) {
+            echo "Reserva borrada con éxito. Redirigiendo...";
+        } else {
+            echo "Error al borrar la reserva. Redirigiendo...";
+        }
+
+        // 4. Redirigir de vuelta al calendario
+        echo "<script>
+                setTimeout(function() {
+                    window.location.href = 'index.php?page=admin&action=calendar';
+                }, 2000); // 2 segundos
+              </script>";
+        exit;
+    }
+
+    // MUESTRA el formulario de edición (Paso 4)
+    public function edit_booking() {
+        // 1. Conexión y Modelo
+        $database = new Database();
+        $db = $database->getConnection();
+        $booking = new Booking($db);
+
+        // 2. Obtener el ID de la URL
+        $id_a_editar = $_GET['id'];
+
+        // 3. Buscar los datos de esa reserva
+        $data = $booking->readOne($id_a_editar);
+
+        // 4. "Extraer" los datos para que la vista los pueda usar
+        // (Esto crea variables como $id_reserva, $email_cliente, etc.)
+        extract($data);
+
+        // 5. Cargar la vista del formulario (la que creamos en el Paso 2)
+        require_once 'views/admin/edit_booking.php';
+    }
+
+    // (Aquí arriba está la función edit_booking()...)
+
+    // PROCESA el formulario de edición (Paso 6)
+    public function update_booking() {
+        // 1. Conexión y Modelo
+        $database = new Database();
+        $db = $database->getConnection();
+        $booking = new Booking($db);
+
+        // 2. Asignar los datos del formulario POST al objeto
+        // (El ID viene del campo <input type="hidden">)
+        $booking->id_reserva = $_POST['id_reserva']; 
+
+        $booking->email_cliente = $_POST['email_cliente'];
+        $booking->id_hotel = $_POST['hotel'];
+        $booking->num_viajeros = $_POST['num_viajeros'];
+        $booking->fecha_entrada = $_POST['dia_llegada'] ?? null;
+        $booking->hora_entrada = $_POST['hora_llegada'] ?? null;
+        $booking->numero_vuelo_entrada = $_POST['vuelo_llegada'] ?? null;
+
+        // 3. Intentar actualizar
+        if($booking->update()) {
+            echo "Reserva actualizada con éxito. Redirigiendo...";
+        } else {
+            echo "Error al actualizar la reserva. Redirigiendo...";
+        }
+
+        // 4. Redirigir de vuelta al calendario
+        echo "<script>
+                setTimeout(function() {
+                    window.location.href = 'index.php?page=admin&action=calendar';
+                }, 2000); // 2 segundos
+              </script>";
+        exit;
+    }
+
+} // <-- Llave final de la clase
 ?>
