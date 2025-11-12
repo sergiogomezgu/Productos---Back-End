@@ -1,43 +1,55 @@
 version: '3.8'
 services:
-  # El servidor web (PHP + Apache)
-  web:
-    build: .
-    container_name: producto2_web
-    ports:
-      - "8003:80" # Tu web se verá en http://localhost:8003
+
+  wp:
+    image: wordpress:6.4-php8.1-apache
+    container_name: fp064_wp
+    depends_on:
+      - db
     volumes:
-      - ./src:/var/www/html
+      - ./wp:/var/www/html
+    ports:
+      - "8082:80"
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: fpuser
+      WORDPRESS_DB_PASSWORD: fp_pass
+      WORDPRESS_DB_NAME: fp064_db
+  web:
+    image: php:8.1-apache
+    container_name: fp064_web
+    volumes:
+      - ./www:/var/www/html
+      - ./php.ini:/usr/local/etc/php/php.ini
+    ports:
+      - "8080:80"
     depends_on:
       - db
 
-  # La base de datos (MySQL)
   db:
     image: mysql:8.0
-    container_name: producto2_db
+    container_name: fp064_db
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root_password
-      MYSQL_DATABASE: producto2_db
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-    ports:
-      - "3307:3306" # Puerto para MySQL
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: fp064_db
+      MYSQL_USER: fpuser
+      MYSQL_PASSWORD: fp_pass
     volumes:
       - db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
 
-  # El gestor de BBDD (PhpMyAdmin)
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    container_name: producto2_pma
-    links:
+    container_name: fp064_phpmyadmin
+    depends_on:
       - db
     environment:
       PMA_HOST: db
-      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: rootpass
     ports:
-      - "8082:80" # Tu PhpMyAdmin se verá en http://localhost:8082
-    restart: always
+      - "8081:80"
 
 volumes:
   db_data:
