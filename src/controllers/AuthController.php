@@ -4,7 +4,7 @@ require_once 'models/User.php';
 
 class AuthController {
 
-    // --- FUNCIÓN DE REGISTRO (Corregida) ---
+    // --- FUNCIÓN DE REGISTRO ---
     public function register() {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             require_once 'views/register.php';
@@ -33,7 +33,7 @@ class AuthController {
         }
     }
 
-    // --- FUNCIÓN DE LOGIN (Corregida) ---
+    // --- FUNCIÓN DE LOGIN ---
     public function login() {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             require_once 'views/login.php';
@@ -54,7 +54,6 @@ class AuthController {
             $_SESSION['user_name'] = $user_data['nombre'];
             $_SESSION['user_role'] = $user_data['tipo_usuario'];
 
-            // --- ¡¡ESTA ES LA LÍNEA QUE ARREGLA EL PROBLEMA!! ---
             // Guardamos el email para que el panel de usuario pueda encontrar sus reservas
             $_SESSION['user_email'] = $user_data['email']; 
 
@@ -72,12 +71,12 @@ class AuthController {
         }
     }
 
-    // --- FUNCIÓN DE LOGOUT (La nueva) ---
+    // --- FUNCIÓN DE LOGOUT ---
     public function logout() {
-        // Destruye todas las variables de sesión
+        // Quita todas las variables de sesión
         $_SESSION = array();
 
-        // Destruye la sesión
+        // Cierra la sesión
         session_destroy();
 
         // Redirige a la home
@@ -85,5 +84,5 @@ class AuthController {
         exit;
     }
 
-} // <-- ESTA ES LA LLAVE FINAL DE LA CLASE
+}
 ?>

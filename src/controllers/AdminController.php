@@ -20,7 +20,6 @@ class AdminController {
     // 2. FUNCIÓN PRINCIPAL
     // Muestra la página principal del panel de admin (el calendario)
     public function index() {
-        // Por ahora, solo cargamos una vista simple
         require_once 'views/admin/dashboard.php';
     }
 
@@ -35,17 +34,15 @@ class AdminController {
         $stmt = $booking->readAll();
 
         // 3. Pasar los datos a la vista
-        // (La variable $stmt estará disponible en el archivo de la vista)
         require_once 'views/admin/calendar.php';
     }
 
     // Muestra el formulario para crear una nueva reserva
     public function create_booking() {
-        // Por ahora, solo cargamos la vista del formulario
         require_once 'views/admin/create_booking.php';
     }
 
-    // PROCESA el formulario de creación de reserva
+    // Procesa el formulario de creación de reserva
     public function submit_booking() {
         // 1. Conexión a la BBDD
         $database = new Database();
@@ -58,7 +55,6 @@ class AdminController {
         $booking->email_cliente = $_POST['email_cliente'];
         $booking->num_viajeros = $_POST['num_viajeros'];
 
-        // --- Traducción de IDs ---
         $booking->id_hotel = $_POST['hotel']; // (Asumimos que el admin escribe el ID del hotel)
         
         $tipo_reserva_texto = $_POST['tipo_reserva'];
@@ -90,8 +86,7 @@ class AdminController {
         }
     }
 
-    // --- ¡NUEVA FUNCIÓN! (Paso 3) ---
-    // PROCESA la eliminación de una reserva
+    // Procesa la eliminación de una reserva
     public function delete_booking() {
         // 1. Conexión y Modelo
         $database = new Database();
@@ -117,7 +112,7 @@ class AdminController {
         exit;
     }
 
-    // MUESTRA el formulario de edición (Paso 4)
+    // Muestra el formulario de edición
     public function edit_booking() {
         // 1. Conexión y Modelo
         $database = new Database();
@@ -138,9 +133,7 @@ class AdminController {
         require_once 'views/admin/edit_booking.php';
     }
 
-    // (Aquí arriba está la función edit_booking()...)
-
-    // PROCESA el formulario de edición (Paso 6)
+    // Procesa el formulario de edición
     public function update_booking() {
         // 1. Conexión y Modelo
         $database = new Database();
@@ -174,5 +167,5 @@ class AdminController {
         exit;
     }
 
-} // <-- Llave final de la clase
+}
 ?>

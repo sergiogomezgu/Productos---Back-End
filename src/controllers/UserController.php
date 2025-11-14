@@ -1,5 +1,5 @@
 <?php
-// Importamos el modelo de reservas, porque el usuario querrá ver sus reservas
+// Importamos el modelo de reservas, porque el usuario querrá ver sus propias reservas
 require_once 'models/Booking.php';
 
 class UserController {
@@ -13,7 +13,6 @@ class UserController {
         }
 
         // Comprueba si el usuario es 'particular'
-        // (Asumimos que el otro rol es 'admin')
         if ($_SESSION['user_role'] !== 'particular') {
             echo "Acceso denegado. Esta sección es solo para usuarios particulares.";
             exit;
@@ -23,9 +22,6 @@ class UserController {
     // 2. FUNCIÓN PRINCIPAL
     // Muestra la página principal del panel de usuario
     public function index() {
-        // (Más adelante, aquí buscaremos las reservas de ESTE usuario)
-
-        // Por ahora, solo cargamos una vista simple
         require_once 'views/user/dashboard.php';
     }
 
@@ -43,11 +39,10 @@ class UserController {
         $stmt = $booking->readByUserEmail($user_email);
 
         // 4. Pasar los datos a la vista
-        // (Reutilizaremos la vista dashboard.php, pero ahora tendrá $stmt)
         require_once 'views/user/dashboard.php';
     }
 
-    // PROCESA la cancelación de una reserva
+    // Procesa la cancelación de una reserva
     public function cancel_booking() {
         // 1. Conexión y Modelo
         $database = new Database();
@@ -60,14 +55,14 @@ class UserController {
         // 3. Obtener el email del usuario de la SESIÓN
         $email_usuario_logueado = $_SESSION['user_email'];
 
-        // --- ¡¡COMPROBACIÓN DE SEGURIDAD!! ---
+        // --- ¡COMPROBACIÓN DE SEGURIDAD! ---
         // 4. Verificamos que esta reserva pertenece al usuario logueado
 
         $reserva = $booking->readOne($id_a_cancelar); // Usamos la función que ya teníamos
 
         if ($reserva && $reserva['email_cliente'] === $email_usuario_logueado) {
-            // El email de la reserva COINCIDE con el de la sesión.
-            // El usuario TIENE permiso para borrar.
+            // El email de la reserva coincide con el de la sesión.
+            // El usuario tiene permiso para cancelar.
 
             if($booking->delete($id_a_cancelar)) { // Reutilizamos la función delete()
                 echo "Reserva cancelada con éxito. Redirigiendo...";
@@ -76,7 +71,6 @@ class UserController {
             }
 
         } else {
-            // ¡Intento de trampas!
             // El usuario está intentando borrar una reserva que no es suya.
             echo "Acceso denegado. No puedes cancelar esta reserva. Redirigiendo...";
         }

@@ -8,7 +8,6 @@ class User {
     public $email;
     public $password;
     public $tipo_usuario;
-    // (Dejamos los otros campos como apellido1, ciudad, etc. para más adelante)
 
     public function __construct($db) {
         $this->conn = $db;

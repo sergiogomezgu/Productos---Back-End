@@ -54,7 +54,6 @@
                     echo "<hr>";
                     echo '<a href="index.php?page=user&action=cancel_booking&id=' . $id_reserva . '" onclick="return confirm(\'¿Estás seguro de que quieres cancelar esta reserva?\');" style="color: red;">Cancelar Reserva</a>';
 
-// (Aquí abajo está la etiqueta </li>)
                     
                     echo "</li>";
                 }

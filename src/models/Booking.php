@@ -3,7 +3,7 @@ class Booking {
     private $conn;
     private $table_name = "transfer_reservas";
 
-    // Propiedades de la reserva (las columnas de tu tabla)
+    // Propiedades de la reserva
     public $id_hotel;
     public $id_tipo_reserva;
     public $email_cliente;
@@ -14,8 +14,6 @@ class Booking {
     public $fecha_vuelo_salida;
     public $hora_vuelo_salida;
     public $num_viajeros;
-
-    // (Campos que generaremos nosotros)
     public $localizador;
     public $fecha_reserva;
     public $fecha_modificacion; // Añadida para la función update
@@ -121,10 +119,8 @@ class Booking {
         return false;
     }
 
-    // --- ¡NUEVA FUNCIÓN! (Paso 1 para Panel de Usuario) ---
     // --- MÉTODO PARA LEER RESERVAS POR EMAIL DE USUARIO ---
     public function readByUserEmail($email) {
-        // Es la misma consulta que 'readAll', pero con un "WHERE"
         $query = "SELECT
                     r.*, 
                     t.Descripción as tipo_reserva_nombre
@@ -145,5 +141,5 @@ class Booking {
         return $stmt;
     }
 
-} // <-- Llave final de la clase
+}
 ?>

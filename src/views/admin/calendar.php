@@ -9,7 +9,7 @@
         nav { background: #f4f4f4; padding: 10px; margin-bottom: 20px; }
         nav a { margin-right: 15px; text-decoration: none; }
         
-        /* Estilos de la tabla de ejemplo (ya no se usa, pero no molesta) */
+        /* Estilos de la tabla de ejemplo */
         .calendar { width: 100%; border-collapse: collapse; }
         .calendar th, .calendar td { border: 1px solid #ccc; padding: 10px; height: 100px; vertical-align: top; }
         .calendar th { background: #f0f0f0; }
@@ -56,11 +56,9 @@
                 echo "<p><strong>Hotel ID:</strong> $id_hotel</p>";
                 echo "<p><strong>Viajeros:</strong> $num_viajeros</p>";
                 echo "<hr>";
-                
-                // --- ¡ESTA ES LA LÍNEA NUEVA DEL PASO 1! ---
+                // --- Nueva línea para el enlace de editar ---
                 echo '<a href="index.php?page=admin&action=edit_booking&id=' . $id_reserva . '">Editar</a> | ';
                 
-                // --- Esta línea ya la tenías ---
                 echo '<a href="index.php?page=admin&action=delete_booking&id=' . $id_reserva . '" onclick="return confirm(\'¿Estás seguro de que quieres borrar esta reserva?\');">Borrar Reserva</a>';
 
                 echo "</li>";

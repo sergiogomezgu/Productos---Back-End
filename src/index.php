@@ -1,7 +1,7 @@
 <?php
 session_start(); // Inicia la sesión en todas las páginas
 
-// Incluir la configuración de la base de datos
+// Incluye la configuración de la base de datos
 require_once 'config/Database.php';
 
 // Determinar qué controlador cargar
@@ -46,7 +46,7 @@ switch ($page) {
         // Miramos si se pide una acción específica (ej: crear, editar)
         $action = isset($_GET['action']) ? $_GET['action'] : 'index';
 
-        // Esta es una forma avanzada de llamar a la función que toca
+        // Esta es una forma de llamar a la función que toca
         // (Si $action = 'index', llama a $controller->index())
         // (Si $action = 'create_booking', llamará a $controller->create_booking())
         if (method_exists($controller, $action)) {
@@ -56,7 +56,6 @@ switch ($page) {
         }
         break;
 
-        // (Aquí arriba está el case 'admin':...)
     break;
 
     case 'user':
