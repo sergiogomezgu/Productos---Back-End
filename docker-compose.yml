@@ -1,43 +1,48 @@
 version: '3.8'
-services:
-  # El servidor web (PHP + Apache)
-  web:
-    build: .
-    container_name: producto2_web
-    ports:
-      - "8003:80" # Tu web se verá en http://localhost:8003
-    volumes:
-      - ./src:/var/www/html
-    depends_on:
-      - db
 
-  # La base de datos (MySQL)
-  db:
+services:
+  app:
+    build:
+      context: ./producto3
+    container_name: laravel_app
+    ports:
+      - "8000:80"
+    volumes:
+      - ./producto3:/var/www/html
+    working_dir: /var/www/html
+    depends_on:
+      - mysql
+    command: bash -c "docker-php-ext-install pdo pdo_mysql && apache2-foreground"
+
+  composer:
+    image: composer:latest
+    container_name: composer_runner
+    volumes:
+      - ./producto3:/app
+    working_dir: /app
+
+  mysql:
     image: mysql:8.0
-    container_name: producto2_db
+    container_name: mysql_db
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root_password
-      MYSQL_DATABASE: producto2_db
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: UOC_transfers
     ports:
-      - "3307:3306" # Puerto para MySQL
+      - "3307:3306"
     volumes:
-      - db_data:/var/lib/mysql
+      - mysql_data:/var/lib/mysql
 
-  # El gestor de BBDD (PhpMyAdmin)
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    container_name: producto2_pma
-    links:
-      - db
-    environment:
-      PMA_HOST: db
-      PMA_PORT: 3306
-    ports:
-      - "8082:80" # Tu PhpMyAdmin se verá en http://localhost:8082
+    container_name: pma
     restart: always
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: root
+      PMA_PASSWORD: root
 
 volumes:
-  db_data:
+  mysql_data:
