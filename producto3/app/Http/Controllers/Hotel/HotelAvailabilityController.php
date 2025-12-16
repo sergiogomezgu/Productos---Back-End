@@ -18,25 +18,33 @@ class HotelAvailabilityController extends Controller
         return view('hotel.availability.index', compact('days'));
     }
 
-    public function toggle(Request $request)
+    public function store(Request $request)
     {
-        $hotelId = auth()->user()->hotel_id;
+        $request->validate([
+            'fecha' => 'required|date',
+            'vehiculo_tipo' => 'required|in:Turismo,Bus',
+            'num_vehiculos' => 'required|integer|min:1',
+        ]);
 
-        $day = Availability::where('hotel_id', $hotelId)
-            ->where('date', $request->date)
-            ->first();
+        Availability::create([
+            'hotel_id' => auth()->user()->hotel_id,
+            'fecha' => $request->fecha,
+            'vehiculo_tipo' => $request->vehiculo_tipo,
+            'num_vehiculos' => $request->num_vehiculos,
+        ]);
 
-        if ($day) {
-            $day->update(['available' => !$day->available]);
-        } else {
-            Availability::create([
-                'hotel_id' => $hotelId,
-                'date' => $request->date,
-                'available' => false,
-            ]);
+        return redirect()->route('hotel.availability')->with('success', 'Disponibilidad agregada correctamente');
+    }
+
+    public function destroy(Availability $availability)
+    {
+        if ($availability->hotel_id != auth()->user()->hotel_id) {
+            abort(403);
         }
 
-        return response()->json(['success' => true]);
+        $availability->delete();
+
+        return redirect()->route('hotel.availability')->with('success', 'Disponibilidad eliminada correctamente');
     }
 
     // API para FullCalendar (admin y hotel)

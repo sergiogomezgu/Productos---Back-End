@@ -79,9 +79,15 @@ Route::middleware(['auth', 'isHotel'])->group(function () {
     // Disponibilidad del hotel
     Route::get('/hotel/availability', [HotelAvailabilityController::class, 'index'])
         ->name('hotel.availability');
+    
+    Route::post('/hotel/availability', [HotelAvailabilityController::class, 'store'])
+        ->name('hotel.availability.store');
+    
+    Route::delete('/hotel/availability/{availability}', [HotelAvailabilityController::class, 'destroy'])
+        ->name('hotel.availability.destroy');
 
-    Route::post('/hotel/availability/toggle', [HotelAvailabilityController::class, 'toggle'])
-        ->name('hotel.availability.toggle');
+    Route::get('/hotel/availability/api', [HotelAvailabilityController::class, 'api'])
+        ->name('hotel.availability.api');
 
     // Comisiones del hotel
     Route::get('/hotel/commissions', [HotelCommissionController::class, 'index'])

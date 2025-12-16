@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Availability extends Model
 {
-  protected $fillable = ['hotel_id', 'date', 'available'];
+    protected $fillable = ['hotel_id', 'vehiculo_tipo', 'num_vehiculos', 'fecha'];
 
     public function hotel()
     {

@@ -6,6 +6,13 @@
     <title>@yield('title') - Panel Hotel</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    
+    <!-- FullCalendar CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css" rel="stylesheet">
+    
+    <!-- FullCalendar JS -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/locales/es.global.min.js"></script>
 </head>
 
 <body class="bg-gray-100 font-sans">
