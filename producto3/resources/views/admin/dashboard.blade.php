@@ -5,7 +5,6 @@
 
 @section('content')
 
-{{-- Tarjetas resumen --}}
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
 
     <div class="bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-lg rounded-xl p-6">
@@ -25,7 +24,6 @@
 
 </div>
 
-{{-- Estado de reservas --}}
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
 
     <div class="bg-yellow-100 text-yellow-800 p-6 rounded-lg shadow border">
@@ -45,7 +43,6 @@
 
 </div>
 
-{{-- Últimas reservas --}}
 <div class="bg-white p-6 rounded-lg shadow border mb-10">
     <h3 class="text-lg font-semibold text-gray-800 mb-4">Últimas reservas</h3>
 
@@ -84,7 +81,6 @@
     </table>
 </div>
 
-{{-- Gráfica opcional --}}
 <div class="bg-white p-6 rounded-lg shadow border">
     <h3 class="text-lg font-semibold text-gray-800 mb-4">Reservas por estado</h3>
     <canvas id="reservationsChart" height="120"></canvas>

@@ -39,7 +39,7 @@ class HotelAvailabilityController extends Controller
         return response()->json(['success' => true]);
     }
 
-    // ✅ API para FullCalendar (admin y hotel)
+    // API para FullCalendar (admin y hotel)
     public function api()
     {
         $hotelId = auth()->user()->hotel_id;

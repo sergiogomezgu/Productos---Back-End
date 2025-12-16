@@ -1,6 +1,6 @@
 FROM php:8.4-apache
 
-# Instalar dependencias necesarias
+# Instalar dependencias necesarias incluyendo Node.js
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libonig-dev \
@@ -8,6 +8,9 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip \
     git \
+    curl \
+    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs \
     && docker-php-ext-install pdo_mysql mysqli
 
 # Habilitar mod_rewrite para Laravel

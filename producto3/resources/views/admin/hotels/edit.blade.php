@@ -39,6 +39,24 @@
                 <textarea name="description" class="w-full border rounded px-3 py-2" rows="4">{{ $hotel->description }}</textarea>
             </div>
 
+            <div class="mb-4">
+                <label class="block font-semibold mb-1">Zona</label>
+                <select name="zona" class="w-full border rounded px-3 py-2">
+                    <option value="">Seleccionar zona</option>
+                    <option value="Norte" {{ $hotel->zona == 'Norte' ? 'selected' : '' }}>Norte</option>
+                    <option value="Sur" {{ $hotel->zona == 'Sur' ? 'selected' : '' }}>Sur</option>
+                    <option value="Este" {{ $hotel->zona == 'Este' ? 'selected' : '' }}>Este</option>
+                    <option value="Oeste" {{ $hotel->zona == 'Oeste' ? 'selected' : '' }}>Oeste</option>
+                    <option value="Centro" {{ $hotel->zona == 'Centro' ? 'selected' : '' }}>Centro</option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label class="block font-semibold mb-1">Comisión (%)</label>
+                <input type="number" name="comision_porcentaje" step="0.01" min="0" max="100" value="{{ $hotel->comision_porcentaje ?? 0 }}" class="w-full border rounded px-3 py-2">
+                <small class="text-gray-500">Porcentaje de comisión que recibirá el hotel por cada reserva</small>
+            </div>
+
             <button class="bg-blue-600 text-white px-4 py-2 rounded">
                 Actualizar hotel
             </button>

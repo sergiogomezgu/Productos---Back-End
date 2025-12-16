@@ -6,7 +6,6 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])</head>
 <body class="bg-gray-100">
     <div class="min-h-screen flex">
-        {{-- Sidebar --}}
         <aside class="w-64 bg-gray-900 text-white p-4">
             <h1 class="text-xl font-bold mb-6">Admin</h1>
             <nav class="space-y-2">
@@ -25,10 +24,12 @@
 <a href="{{ route('admin.reservations.calendar') }}" class="block hover:bg-gray-700 px-3 py-2 rounded">
     Calendario
 </a>
+                <a href="{{ route('admin.commissions.index') }}" class="block hover:bg-gray-700 px-3 py-2 rounded">
+                    Comisiones
+                </a>
             </nav>
         </aside>
 
-        {{-- Contenido principal --}}
         <main class="flex-1 p-6">
             <header class="flex justify-between items-center mb-6">
                 <h2 class="text-2xl font-semibold">

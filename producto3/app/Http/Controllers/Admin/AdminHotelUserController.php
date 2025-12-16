@@ -63,7 +63,7 @@ class AdminHotelUserController extends Controller
             'email' => $request->email,
         ];
 
-        // ✅ Solo actualizar contraseña si el usuario la cambia
+        // Solo actualizar contraseña si el usuario la cambia
         if ($request->filled('password')) {
             $data['password'] = Hash::make($request->password);
         }

@@ -9,15 +9,21 @@ use App\Http\Controllers\Admin\AdminReservationController;
 use App\Http\Controllers\Hotel\HotelDashboardController;
 use App\Http\Controllers\Hotel\HotelReservationController;
 use App\Http\Controllers\Hotel\HotelReservationCalendarController;
+use App\Http\Controllers\Hotel\HotelCommissionController;
+use App\Http\Controllers\Hotel\HotelAvailabilityController;
+use App\Http\Controllers\Admin\AdminCommissionController;
 
 // Página principal
 Route::get('/', function () {
     return view('welcome');
 });
 
-// Dashboard por defecto de Laravel
+// Dashboard redirige según el rol
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    if (auth()->user()->role === 'admin') {
+        return redirect()->route('admin.dashboard');
+    }
+    return redirect()->route('hotel.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Perfil de usuario
@@ -27,7 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// ✅ PANEL ADMIN
+// Panel Admin
 Route::middleware(['auth', 'isAdmin'])->group(function () {
 
     // Calendario de reservas (debe ir antes del resource)
@@ -49,9 +55,13 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     // Reservas
     Route::resource('/admin/reservations', AdminReservationController::class)
         ->names('admin.reservations');
+
+    // Comisiones
+    Route::get('/admin/commissions', [AdminCommissionController::class, 'index'])
+        ->name('admin.commissions.index');
 });
 
-// ✅ PANEL HOTEL
+// Panel Hotel
 Route::middleware(['auth', 'isHotel'])->group(function () {
 
     // Dashboard del hotel
@@ -66,13 +76,16 @@ Route::middleware(['auth', 'isHotel'])->group(function () {
     Route::resource('/hotel/reservations', HotelReservationController::class)
         ->names('hotel.reservations');
 
-        // Disponibilidad del hotel
-Route::get('/hotel/availability', [HotelAvailabilityController::class, 'index'])
-    ->name('hotel.availability');
+    // Disponibilidad del hotel
+    Route::get('/hotel/availability', [HotelAvailabilityController::class, 'index'])
+        ->name('hotel.availability');
 
-Route::post('/hotel/availability/toggle', [HotelAvailabilityController::class, 'toggle'])
-    ->name('hotel.availability.toggle');
+    Route::post('/hotel/availability/toggle', [HotelAvailabilityController::class, 'toggle'])
+        ->name('hotel.availability.toggle');
 
+    // Comisiones del hotel
+    Route::get('/hotel/commissions', [HotelCommissionController::class, 'index'])
+        ->name('hotel.commissions.index');
 });
 
 require __DIR__.'/auth.php';

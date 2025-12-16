@@ -37,6 +37,8 @@ class AdminHotelController extends Controller
             'phone' => 'nullable|string|max:50',
             'email' => 'nullable|email|max:255',
             'description' => 'nullable|string',
+            'zona' => 'nullable|string|max:255',
+            'comision_porcentaje' => 'nullable|numeric|min:0|max:100',
         ]);
 
         Hotel::create($request->all());
@@ -65,6 +67,8 @@ class AdminHotelController extends Controller
             'phone' => 'nullable|string|max:50',
             'email' => 'nullable|email|max:255',
             'description' => 'nullable|string',
+            'zona' => 'nullable|string|max:255',
+            'comision_porcentaje' => 'nullable|numeric|min:0|max:100',
         ]);
 
         $hotel->update($request->all());

@@ -34,10 +34,11 @@ class HotelReservationController extends Controller
             'check_in' => 'required|date',
             'check_out' => 'required|date|after:check_in',
             'guests' => 'required|integer|min:1',
+            'total_price' => 'required|numeric|min:0',
             'status' => 'required|in:pendiente,confirmada,cancelada',
         ]);
 
-        // ✅ Comprobar días bloqueados
+        // Comprobar días bloqueados
         $blocked = Availability::where('hotel_id', $hotelUser->hotel_id)
             ->where('available', false)
             ->whereBetween('date', [$request->check_in, $request->check_out])
@@ -49,15 +50,14 @@ class HotelReservationController extends Controller
             ]);
         }
 
-        // ✅ Crear reserva
         Reservation::create([
             'hotel_id' => $hotelUser->hotel_id,
             'hotel_user_id' => $hotelUser->id,
             'check_in' => $request->check_in,
             'check_out' => $request->check_out,
             'guests' => $request->guests,
+            'total_price' => $request->total_price,
             'status' => $request->status,
-            'total_price' => 0,
         ]);
 
         return redirect()->route('hotel.reservations.index')
@@ -83,10 +83,11 @@ class HotelReservationController extends Controller
             'check_in' => 'required|date',
             'check_out' => 'required|date|after:check_in',
             'guests' => 'required|integer|min:1',
+            'total_price' => 'required|numeric|min:0',
             'status' => 'required|in:pendiente,confirmada,cancelada',
         ]);
 
-        // ✅ Comprobar días bloqueados
+        // Comprobar días bloqueados
         $blocked = Availability::where('hotel_id', $reservation->hotel_id)
             ->where('available', false)
             ->whereBetween('date', [$request->check_in, $request->check_out])
@@ -98,7 +99,13 @@ class HotelReservationController extends Controller
             ]);
         }
 
-        $reservation->update($request->all());
+        $reservation->update([
+            'check_in' => $request->check_in,
+            'check_out' => $request->check_out,
+            'guests' => $request->guests,
+            'total_price' => $request->total_price,
+            'status' => $request->status,
+        ]);
 
         return redirect()->route('hotel.reservations.index')
             ->with('success', 'Reserva actualizada correctamente');

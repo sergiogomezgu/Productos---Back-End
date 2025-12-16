@@ -5,7 +5,6 @@
 
 @section('content')
 
-    {{-- Tarjetas estadísticas --}}
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
 
         <div class="bg-white p-6 shadow rounded">
@@ -25,8 +24,7 @@
 
     </div>
 
-    {{-- Reservas por estado --}}
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
 
         <div class="bg-yellow-100 p-6 shadow rounded">
             <h3 class="text-gray-700 text-sm">Pendientes</h3>
@@ -43,9 +41,13 @@
             <p class="text-3xl font-bold">{{ $cancelled }}</p>
         </div>
 
+        <div class="bg-blue-100 p-6 shadow rounded">
+            <h3 class="text-gray-700 text-sm">Comisiones este mes</h3>
+            <p class="text-2xl font-bold text-blue-800">€{{ number_format($totalComisionesMes, 2) }}</p>
+        </div>
+
     </div>
 
-    {{-- Últimas reservas --}}
     <div class="bg-white p-6 shadow rounded">
         <h3 class="text-xl font-semibold mb-4">Últimas reservas</h3>
 

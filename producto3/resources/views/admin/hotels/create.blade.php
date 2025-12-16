@@ -38,6 +38,24 @@
                 <textarea name="description" class="w-full border rounded px-3 py-2" rows="4"></textarea>
             </div>
 
+            <div class="mb-4">
+                <label class="block font-semibold mb-1">Zona</label>
+                <select name="zona" class="w-full border rounded px-3 py-2">
+                    <option value="">Seleccionar zona</option>
+                    <option value="Norte">Norte</option>
+                    <option value="Sur">Sur</option>
+                    <option value="Este">Este</option>
+                    <option value="Oeste">Oeste</option>
+                    <option value="Centro">Centro</option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label class="block font-semibold mb-1">Comisión (%)</label>
+                <input type="number" name="comision_porcentaje" step="0.01" min="0" max="100" class="w-full border rounded px-3 py-2" value="0">
+                <small class="text-gray-500">Porcentaje de comisión que recibirá el hotel por cada reserva</small>
+            </div>
+
             <button class="bg-blue-600 text-white px-4 py-2 rounded">
                 Guardar hotel
             </button>

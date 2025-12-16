@@ -52,7 +52,7 @@ class AdminReservationController extends Controller
             'check_in' => 'required|date',
             'check_out' => 'required|date|after:check_in',
             'guests' => 'required|integer|min:1',
-            'total_price' => 'nullable|numeric|min:0',
+            'total_price' => 'required|numeric|min:0',
             'status' => 'required|in:pendiente,confirmada,cancelada',
         ]);
 
@@ -78,7 +78,7 @@ class AdminReservationController extends Controller
             'check_in' => 'required|date',
             'check_out' => 'required|date|after:check_in',
             'guests' => 'required|integer|min:1',
-            'total_price' => 'nullable|numeric|min:0',
+            'total_price' => 'required|numeric|min:0',
             'status' => 'required|in:pendiente,confirmada,cancelada',
         ]);
 

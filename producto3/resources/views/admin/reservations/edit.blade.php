@@ -48,8 +48,9 @@
             </div>
 
             <div class="mb-4">
-                <label class="block font-semibold mb-1">Precio total</label>
-                <input type="number" step="0.01" name="total_price" value="{{ $reservation->total_price }}" class="w-full border rounded px-3 py-2">
+                <label class="block font-semibold mb-1">Precio total (€)</label>
+                <input type="number" step="0.01" name="total_price" value="{{ $reservation->total_price }}" class="w-full border rounded px-3 py-2" min="0" required>
+                <small class="text-gray-500">Base para calcular comisiones del hotel</small>
             </div>
 
             <div class="mb-4">

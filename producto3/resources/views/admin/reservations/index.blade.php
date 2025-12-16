@@ -9,7 +9,6 @@
     </a>
 <form method="GET" action="{{ route('admin.reservations.index') }}" class="mb-6 flex gap-4 items-end">
 
-    {{-- Filtro por hotel --}}
     <div>
         <label class="block text-sm font-semibold mb-1">Hotel</label>
         <select name="hotel_id" class="border rounded px-3 py-2">
@@ -22,7 +21,6 @@
         </select>
     </div>
 
-    {{-- Filtro por estado --}}
     <div>
         <label class="block text-sm font-semibold mb-1">Estado</label>
         <select name="status" class="border rounded px-3 py-2">
@@ -33,7 +31,6 @@
         </select>
     </div>
 
-    {{-- Filtro por fechas --}}
     <div>
         <label class="block text-sm font-semibold mb-1">Desde</label>
         <input type="date" name="from" value="{{ request('from') }}" class="border rounded px-3 py-2">

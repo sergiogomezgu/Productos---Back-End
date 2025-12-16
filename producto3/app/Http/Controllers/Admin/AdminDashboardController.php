@@ -21,6 +21,20 @@ class AdminDashboardController extends Controller
         $confirmed = Reservation::where('status', 'confirmada')->count();
         $cancelled = Reservation::where('status', 'cancelada')->count();
 
+        // Comisiones del mes actual
+        $reservasConfirmadasMes = Reservation::where('status', 'confirmada')
+            ->whereYear('check_in', date('Y'))
+            ->whereMonth('check_in', date('m'))
+            ->with('hotel')
+            ->get();
+            
+        $totalComisionesMes = 0;
+        foreach ($reservasConfirmadasMes as $reserva) {
+            if ($reserva->hotel) {
+                $totalComisionesMes += ($reserva->total_price * $reserva->hotel->comision_porcentaje) / 100;
+            }
+        }
+
         // Últimas reservas
         $latestReservations = Reservation::with(['hotel', 'hotelUser'])
             ->orderBy('created_at', 'desc')
@@ -34,6 +48,7 @@ class AdminDashboardController extends Controller
             'pending',
             'confirmed',
             'cancelled',
+            'totalComisionesMes',
             'latestReservations'
         ));
     }

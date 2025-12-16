@@ -14,6 +14,8 @@
                 <th class="p-3 text-left">ID</th>
                 <th class="p-3 text-left">Nombre</th>
                 <th class="p-3 text-left">Ciudad</th>
+                <th class="p-3 text-left">Zona</th>
+                <th class="p-3 text-left">Comisión</th>
                 <th class="p-3 text-left">Acciones</th>
             </tr>
         </thead>
@@ -24,14 +26,14 @@
                     <td class="p-3">{{ $hotel->id }}</td>
                     <td class="p-3">{{ $hotel->name }}</td>
                     <td class="p-3">{{ $hotel->city }}</td>
+                    <td class="p-3">{{ $hotel->zona ?? '-' }}</td>
+                    <td class="p-3">{{ number_format($hotel->comision_porcentaje ?? 0, 2) }}%</td>
 
                     <td class="p-3 flex gap-3">
-                        {{-- Botón Editar --}}
                         <a href="{{ route('admin.hotels.edit', $hotel) }}" class="text-blue-600">
                             Editar
                         </a>
 
-                        {{-- Botón Eliminar --}}
                         <form action="{{ route('admin.hotels.destroy', $hotel) }}"
                               method="POST"
                               onsubmit="return confirm('¿Seguro que deseas eliminar este hotel?')">

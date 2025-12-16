@@ -21,7 +21,13 @@
 
     <div>
         <label class="block mb-1 font-semibold">Huéspedes</label>
-        <input type="number" name="guests" value="{{ $reservation->guests }}" class="border rounded px-3 py-2 w-full">
+        <input type="number" name="guests" value="{{ $reservation->guests }}" class="border rounded px-3 py-2 w-full" min="1" required>
+    </div>
+
+    <div>
+        <label class="block mb-1 font-semibold">Precio Total (€)</label>
+        <input type="number" name="total_price" step="0.01" min="0" value="{{ $reservation->total_price }}" class="border rounded px-3 py-2 w-full" required>
+        <small class="text-gray-500">El hotel recibirá comisión sobre este monto</small>
     </div>
 
     <div>
