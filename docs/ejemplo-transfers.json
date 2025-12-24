@@ -1,0 +1,137 @@
+[
+  {
+    "id": 1,
+    "fecha": "2024-12-15",
+    "origen": "Aeropuerto Barcelona El Prat",
+    "destino": "Hotel Arts Barcelona",
+    "pasajeros": 4,
+    "vehiculo": "Mercedes Clase V",
+    "precio": 75.00
+  },
+  {
+    "id": 2,
+    "fecha": "2024-12-16",
+    "origen": "Hotel W Barcelona",
+    "destino": "Estación de Sants",
+    "pasajeros": 2,
+    "vehiculo": "Audi A6",
+    "precio": 45.00
+  },
+  {
+    "id": 3,
+    "fecha": "2024-12-17",
+    "origen": "Puerto de Barcelona",
+    "destino": "Aeropuerto Barcelona El Prat",
+    "pasajeros": 6,
+    "vehiculo": "Mercedes Vito",
+    "precio": 85.00
+  },
+  {
+    "id": 4,
+    "fecha": "2024-12-18",
+    "origen": "Estación de Sants",
+    "destino": "Hotel Majestic",
+    "pasajeros": 3,
+    "vehiculo": "BMW Serie 5",
+    "precio": 50.00
+  },
+  {
+    "id": 5,
+    "fecha": "2024-12-19",
+    "origen": "Aeropuerto Barcelona El Prat",
+    "destino": "Hotel Gran Marina",
+    "pasajeros": 2,
+    "vehiculo": "Audi A6",
+    "precio": 60.00
+  },
+  {
+    "id": 6,
+    "fecha": "2024-12-20",
+    "origen": "Hotel Pullman Barcelona",
+    "destino": "Aeropuerto Barcelona El Prat",
+    "pasajeros": 5,
+    "vehiculo": "Mercedes Clase V",
+    "precio": 80.00
+  },
+  {
+    "id": 7,
+    "fecha": "2024-12-21",
+    "origen": "Aeropuerto Barcelona El Prat",
+    "destino": "Puerto de Barcelona",
+    "pasajeros": 4,
+    "vehiculo": "Mercedes Vito",
+    "precio": 70.00
+  },
+  {
+    "id": 8,
+    "fecha": "2024-12-22",
+    "origen": "Hotel NH Collection Barcelona",
+    "destino": "Estación de Sants",
+    "pasajeros": 2,
+    "vehiculo": "BMW Serie 5",
+    "precio": 40.00
+  },
+  {
+    "id": 9,
+    "fecha": "2024-12-23",
+    "origen": "Aeropuerto Barcelona El Prat",
+    "destino": "Hotel Me Barcelona",
+    "pasajeros": 3,
+    "vehiculo": "Audi A6",
+    "precio": 65.00
+  },
+  {
+    "id": 10,
+    "fecha": "2024-12-24",
+    "origen": "Hotel Barcelona Princess",
+    "destino": "Aeropuerto Barcelona El Prat",
+    "pasajeros": 4,
+    "vehiculo": "Mercedes Clase V",
+    "precio": 75.00
+  },
+  {
+    "id": 11,
+    "fecha": "2024-12-25",
+    "origen": "Aeropuerto Barcelona El Prat",
+    "destino": "Hotel Ohla Barcelona",
+    "pasajeros": 2,
+    "vehiculo": "BMW Serie 5",
+    "precio": 55.00
+  },
+  {
+    "id": 12,
+    "fecha": "2024-12-26",
+    "origen": "Puerto de Barcelona",
+    "destino": "Hotel Mandarín Oriental",
+    "pasajeros": 6,
+    "vehiculo": "Mercedes Vito",
+    "precio": 90.00
+  },
+  {
+    "id": 13,
+    "fecha": "2024-12-27",
+    "origen": "Hotel Cotton House",
+    "destino": "Aeropuerto Barcelona El Prat",
+    "pasajeros": 3,
+    "vehiculo": "Audi A6",
+    "precio": 70.00
+  },
+  {
+    "id": 14,
+    "fecha": "2024-12-28",
+    "origen": "Aeropuerto Barcelona El Prat",
+    "destino": "Hotel The One Barcelona",
+    "pasajeros": 4,
+    "vehiculo": "Mercedes Clase V",
+    "precio": 75.00
+  },
+  {
+    "id": 15,
+    "fecha": "2024-12-29",
+    "origen": "Estación de Sants",
+    "destino": "Hotel Sir Victor",
+    "pasajeros": 2,
+    "vehiculo": "BMW Serie 5",
+    "precio": 35.00
+  }
+]

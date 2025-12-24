@@ -1,0 +1,19 @@
+# WordPress volumes (no subir datos de Docker)
+docker/wordpress_data/
+docker/db_data/
+
+# Node modules
+node_modules/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
